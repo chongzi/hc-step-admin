@@ -1,0 +1,259 @@
+{template 'common/header'}
+<style>
+	.dag,.dagtwo,.dagthree,.dagfor{
+		display:none;
+	}
+</style>
+<ul class="nav nav-tabs">
+	<li><a href="{php echo $this->createWebUrl('huodong')}">活动</a></li>
+	<li class="active"><a href="{php echo $this->createWebUrl('huodong_post')}">添加活动</a></li>
+</ul>
+<div class="clearfix">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" onsubmit="return formcheck()">
+		<input type="hidden" name="id" value="{$info['id']}">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				活动设置
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">排序</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="displayorder" class="form-control" value="{$info['displayorder']}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">活动类型</label>
+					<div class="col-sm-9 col-xs-12" id="qie">
+						<label class="radio-inline inlinetab" data-name="{$info['entrypic1']}">
+							<input type="radio" name="jump" {if $info['jump'] == 1} checked {/if} value="1">抽奖
+						</label>
+						<label class="radio-inline inlinetab" data-name="{$info['entrypic2']}">
+							<input type="radio" name="jump" {if $info['jump'] == 2} checked {/if} value="2">步数挑战
+						</label>
+						<label class="radio-inline inlinetab" data-name="{$info['entrypic3']}">
+							<input type="radio" name="jump" {if $info['jump'] == 3} checked {/if} value="3">步数商城(全部商品)
+						</label>
+						<label class="radio-inline inlinetab" data-name="{$info['entrypic4']}">
+							<input type="radio" name="jump" {if $info['jump'] == 4} checked {/if} value="4">跳转小程序
+						</label>
+						<label class="radio-inline inlinetab" >
+							<input type="radio" name="jump" {if $info['jump'] == 5} checked {/if} value="5">跳转H5
+						</label>
+						<label class="radio-inline inlinetab" >
+							<input type="radio" name="jump" {if $info['jump'] == 6} checked {/if} value="6">跳转单页(全屏图)
+						</label>
+						<label class="radio-inline inlinetab" data-name="{$info['entrypic5']}">
+							<input type="radio" name="jump" {if $info['jump'] == 7} checked {/if} value="7">看激励视频送步数
+						</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">活动封面图</label>
+					<!-- <div class="col-sm-9 col-xs-12">
+						 {php echo tpl_form_field_image('entrypic',$info['entrypic']);}
+						<span class="help-block">图标图片，建议600*800</span>
+					</div> -->
+					<div class="col-sm-9 col-xs-12">				
+					<div class="input-group ">
+						<input type="text" name="entrypic" value="{$info['entrypic']}" class="form-control dhagvw" autocomplete="off">
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="button" onclick="showImageDialog(this);">选择图片</button>
+						</span>
+					</div>
+					<div class="input-group " style="margin-top:.5em;">
+						<img src="{media $info['entrypic']}" onerror="this.src='./resource/images/nopic.jpg'; this.title='图片未找到.'" class="img-responsive img-thumbnail urlimg" width="150">
+						<em class="close" style="position:absolute; top: 0px; right: -14px;" title="删除这张图片" onclick="deleteImage(this)">×</em>
+					</div>						
+					<span class="help-block">图标图片，建议600*800</span>
+					</div>
+				</div>
+				<div class="form-group one">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">小程序路径</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="xcxpath" class="form-control" value="{$info['xcxpath']}">
+					</div>
+				</div>
+				<div class="form-group two">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">小程序appid</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="xcxappid" class="form-control" value="{$info['xcxappid']}">
+					</div>
+				</div>
+				<div class="form-group three">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">H5链接</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="h5" class="form-control" value="{$info['h5']}">
+					</div>
+				</div>
+				<div class="form-group four">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">单页图</label>
+					<div class="col-sm-9 col-xs-12">
+						 {php echo tpl_form_field_image('diypic',$info['diypic']);}
+						<span class="help-block">建议1080*1920</span>
+					</div>
+				</div>
+				<div class="form-group five">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">激励式视频广告位ID</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="ad" class="form-control" value="{$info['ad']}">
+					</div>
+				</div>
+				<div class="form-group five">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">奖励步数</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="step" class="form-control" value="{$info['step']}">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group col-sm-12">
+			<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1">
+			{if empty($info['id'])}
+				<input type="hidden" name="act" value="add">
+			{else}
+				<input type="hidden" name="act" value="edit">
+			{/if}
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+	$('#qie').find('label').each(function(){			
+		$(this).click(function(){
+			var index=$(this).index()
+			var img=$(this).data("name")
+			$('.dhagvw').val(img)
+			$('.urlimg').attr("src",img);
+			console.log(img )
+			if(index==0){
+				$('.one').hide()
+				$('.two').hide()
+				$('.three').hide()
+				$('.four').hide()
+				$('.five').hide()
+			}else if(index==1){
+				$('.one').hide()
+				$('.two').hide()
+				$('.three').hide()
+				$('.four').hide()
+				$('.five').hide()
+			}
+			else if(index==2){
+				$('.one').hide()
+				$('.two').hide()
+				$('.three').hide()
+				$('.four').hide()
+				$('.five').hide()
+			}
+			else if(index==3){
+				$('.one').show()
+				$('.two').show()
+				$('.three').hide()
+				$('.four').hide()
+				$('.five').hide()
+			}
+			else if(index==4){
+				$('.one').hide()
+				$('.two').hide()
+				$('.three').show()
+				$('.four').hide()
+				$('.five').hide()
+			}else if(index==5){
+				$('.one').hide()
+				$('.two').hide()
+				$('.three').hide()
+				$('.four').show()
+				$('.five').hide()
+			}else if(index==6){
+				$('.one').hide()
+				$('.two').hide()
+				$('.three').hide()
+				$('.four').hide()
+				$('.five').show()
+			}
+		})
+	})
+	var index = $('#qie label').find(':radio:checked').val();
+	        if(index==1){
+				$('.one').hide()
+				$('.two').hide()
+				$('.three').hide()
+				$('.four').hide()
+				$('.five').hide()
+			}else if(index==2){
+				$('.one').hide()
+				$('.two').hide()
+				$('.three').hide()
+				$('.four').hide()
+				$('.five').hide()
+			}
+			else if(index==3){
+				$('.one').hide()
+				$('.two').hide()
+				$('.three').hide()
+				$('.four').hide()
+				$('.five').hide()
+			}
+			else if(index==4){
+				$('.one').show()
+				$('.two').show()
+				$('.three').hide()
+				$('.four').hide()
+				$('.five').hide()
+			}
+			else if(index==5){
+				$('.one').hide()
+				$('.two').hide()
+				$('.three').show()
+				$('.four').hide()
+				$('.five').hide()
+			}else if(index==6){
+				$('.one').hide()
+				$('.two').hide()
+				$('.three').hide()
+				$('.four').show()
+				$('.five').hide()
+			}else if(index==7){
+				$('.one').hide()
+				$('.two').hide()
+				$('.three').hide()
+				$('.four').hide()
+				$('.five').show()
+			}
+</script>
+<script type="text/javascript">
+						function showImageDialog(elm, opts, options) {
+							require(["util"], function(util){
+								var btn = $(elm);
+								var ipt = btn.parent().prev();
+								var val = ipt.val();
+								var img = ipt.parent().next().children();
+								options = {'global':false,'class_extra':'','direct':true,'multiple':false,'fileSizeLimit':52428800};
+								util.image(val, function(url){
+									if(url.url){
+										if(img.length > 0){
+											img.get(0).src = url.url;
+										}
+										ipt.val(url.attachment);
+										ipt.attr("filename",url.filename);
+										ipt.attr("url",url.url);
+									}
+									if(url.media_id){
+										if(img.length > 0){
+											img.get(0).src = "";
+										}
+										ipt.val(url.media_id);
+									}
+								}, options);
+							});
+						}
+						function deleteImage(elm){
+							$(elm).prev().attr("src", "./resource/images/nopic.jpg");
+							$(elm).parent().prev().find("input").val("");
+						}
+						function img(){
+							alert(img)
+						}
+					</script>
+
+{template 'common/footer'}

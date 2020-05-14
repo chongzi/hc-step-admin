@@ -1,0 +1,694 @@
+{template 'common/header'}
+<script src="/addons/hc_pdd/template/js/color.js"></script>
+<ul class="nav nav-tabs">
+	<li><a href="{php echo $this->createWebUrl('setting')}">基础设置</a></li>
+	<li><a href="{php echo $this->createWebUrl('guanzhu')}">关注设置</a></li>
+	<li><a href="{php echo $this->createWebUrl('shenhe')}">审核设置</a></li>
+	<li><a href="{php echo $this->createWebUrl('ad')}">流量主设置</a></li>
+	<li><a href="{php echo $this->createWebUrl('poster')}">海报设置</a></li>
+	<li><a href="{php echo $this->createWebUrl('message')}">模板消息</a></li>
+	<li><a href="{php echo $this->createWebUrl('signin')}">签到设置</a></li>
+	<li><a href="{php echo $this->createWebUrl('settime')}">定时任务</a></li>
+	<li><a href="{php echo $this->createWebUrl('notice')}">公告设置</a></li>
+	<li><a href="{php echo $this->createWebUrl('centerdiy')}">个人中心</a></li>
+	<li class="active"><a href="{php echo $this->createWebUrl('others')}">其他设置</a></li>
+</ul>
+<div class="clearfixcon">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" id="form1" style="display: block">
+		<div class="panel panel-default con" id="tab3">
+		    <div class="panel-heading">
+				首页五个功能小方块<sapn style="color:red;">(五个小方块跳转功能多种多样，因人而异，因此系统未设置默认图片，请用户自行按尺寸按需设计图片)</sapn>
+			</div>
+			<div class="panel-body">
+				<div class="tab-pane active" id="tab_param2">
+				    <div class="form-group">
+				        <label class="col-xs-12 col-sm-3 col-md-2 control-label">首页是否展示总开关</label>
+				        <div class="col-sm-9 col-xs-12">
+					    <label class="radio-inline">
+						   <input type="radio" name="is_five" {if $info['is_five'] == 0} checked {/if} value="0">不显示
+					    </label>
+					    <label class="radio-inline">
+						   <input type="radio" name="is_five" {if $info['is_five'] == 1} checked {/if} value="1">显示
+					    </label>
+				        </div>
+			        </div>
+	                <div class="form-group">
+						<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">左1图片</label>
+						<div class="col-sm-8">
+							{php echo tpl_form_field_image('left1',$info['left1']);}
+							<div style="color: red !important;">建议比例：300*300。
+						    </div>
+						</div>
+					</div> 
+					<div class="form-group">
+				        <label class="col-xs-12 col-sm-3 col-md-2 control-label">左1方块跳转</label>
+				        <div class="col-sm-9 col-xs-12" id="qie3">
+					    <label class="radio-inline">
+						   <input type="radio" name="left1_jump" {if $info['left1_jump'] == 0} checked {/if} value="0">步友圈
+					    </label>
+					    <label class="radio-inline">
+						   <input type="radio" name="left1_jump" {if $info['left1_jump'] == 1} checked {/if} value="1">任务功能
+					    </label>
+					    <label class="radio-inline">
+						   <input type="radio" name="left1_jump" {if $info['left1_jump'] == 2} checked {/if} value="2">步数商城
+					    </label>
+					    <label class="radio-inline">
+						   <input type="radio" name="left1_jump" {if $info['left1_jump'] == 3} checked {/if} value="3">活动页面
+					    </label>
+					    <label class="radio-inline">
+						   <input type="radio" name="left1_jump" {if $info['left1_jump'] == 4} checked {/if} value="4">跳转小程序
+					    </label>
+					    <label class="radio-inline">
+						   <input type="radio" name="left1_jump" {if $info['left1_jump'] == 5} checked {/if} value="5">口红小游戏
+					    </label>
+				        </div>
+			        </div>
+			        <div class="form-group aaa">
+						<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">小程序appid</label>
+						<div class="col-sm-8">
+							<input type="text" name="left1_appid" class="form-control" value="{$info['left1_appid']}">					
+						</div>
+					</div>
+					<div class="form-group aaa">
+						<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">小程序path</label>
+						<div class="col-sm-8">
+							<input type="text" name="left1_path" class="form-control" value="{$info['left1_path']}">					
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">左2图片</label>
+						<div class="col-sm-8">
+							{php echo tpl_form_field_image('left2',$info['left2']);}
+							<div style="color: red !important;">建议比例：300*130。
+						    </div>
+						</div>
+					</div>
+					<div class="form-group">
+				        <label class="col-xs-12 col-sm-3 col-md-2 control-label">左2方块跳转</label>
+				        <div class="col-sm-9 col-xs-12" id="qie4">
+					    <label class="radio-inline">
+						   <input type="radio" name="left2_jump" {if $info['left2_jump'] == 0} checked {/if} value="0">步友圈
+					    </label>
+					    <label class="radio-inline">
+						   <input type="radio" name="left2_jump" {if $info['left2_jump'] == 1} checked {/if} value="1">任务功能
+					    </label>
+					    <label class="radio-inline">
+						   <input type="radio" name="left2_jump" {if $info['left2_jump'] == 2} checked {/if} value="2">步数商城
+					    </label>
+					    <label class="radio-inline">
+						   <input type="radio" name="left2_jump" {if $info['left2_jump'] == 3} checked {/if} value="3">活动页面
+					    </label>
+					    <label class="radio-inline">
+						   <input type="radio" name="left2_jump" {if $info['left2_jump'] == 4} checked {/if} value="4">跳转小程序
+					    </label>
+					    <label class="radio-inline">
+						   <input type="radio" name="left2_jump" {if $info['left2_jump'] == 5} checked {/if} value="5">口红小游戏
+					    </label>
+				        </div>
+			        </div>
+			        <div class="form-group bbb">
+						<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">小程序appid</label>
+						<div class="col-sm-8">
+							<input type="text" name="left2_appid" class="form-control" value="{$info['left2_appid']}">					
+						</div>
+					</div>
+					<div class="form-group bbb">
+						<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">小程序path</label>
+						<div class="col-sm-8">
+							<input type="text" name="left2_path" class="form-control" value="{$info['left2_path']}">					
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">右1图片</label>
+						<div class="col-sm-8">
+							{php echo tpl_form_field_image('right1',$info['right1']);}
+							<div style="color: red !important;">建议比例：300*130。
+						    </div>
+						</div>
+					</div> 
+					<div class="form-group">
+				        <label class="col-xs-12 col-sm-3 col-md-2 control-label">右1方块跳转</label>
+				        <div class="col-sm-9 col-xs-12" id="qie5">
+					    <label class="radio-inline">
+						   <input type="radio" name="right1_jump" {if $info['right1_jump'] == 0} checked {/if} value="0">步友圈
+					    </label>
+					    <label class="radio-inline">
+						   <input type="radio" name="right1_jump" {if $info['right1_jump'] == 1} checked {/if} value="1">任务功能
+					    </label>
+					    <label class="radio-inline">
+						   <input type="radio" name="right1_jump" {if $info['right1_jump'] == 2} checked {/if} value="2">步数商城
+					    </label>
+					    <label class="radio-inline">
+						   <input type="radio" name="right1_jump" {if $info['right1_jump'] == 3} checked {/if} value="3">活动页面
+					    </label>
+					    <label class="radio-inline">
+						   <input type="radio" name="right1_jump" {if $info['right1_jump'] == 4} checked {/if} value="4">跳转小程序
+					    </label>
+					    <label class="radio-inline">
+						   <input type="radio" name="right1_jump" {if $info['right1_jump'] == 5} checked {/if} value="5">口红小游戏
+					    </label>
+				        </div>
+			        </div>
+			        <div class="form-group ccc">
+						<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">小程序appid</label>
+						<div class="col-sm-8">
+							<input type="text" name="right1_appid" class="form-control" value="{$info['right1_appid']}">					
+						</div>
+					</div>
+					<div class="form-group ccc">
+						<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">小程序path</label>
+						<div class="col-sm-8">
+							<input type="text" name="right1_path" class="form-control" value="{$info['right1_path']}">					
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">右2图片</label>
+						<div class="col-sm-8">
+							{php echo tpl_form_field_image('right2',$info['right2']);}
+							<div style="color: red !important;">建议比例：300*130。
+						    </div>
+						</div>
+					</div> 
+					<div class="form-group">
+				        <label class="col-xs-12 col-sm-3 col-md-2 control-label">右2方块跳转</label>
+				        <div class="col-sm-9 col-xs-12" id="qie6">
+					    <label class="radio-inline">
+						   <input type="radio" name="right2_jump" {if $info['right2_jump'] == 0} checked {/if} value="0">步友圈
+					    </label>
+					    <label class="radio-inline">
+						   <input type="radio" name="right2_jump" {if $info['right2_jump'] == 1} checked {/if} value="1">任务功能
+					    </label>
+					    <label class="radio-inline">
+						   <input type="radio" name="right2_jump" {if $info['right2_jump'] == 2} checked {/if} value="2">步数商城
+					    </label>
+					    <label class="radio-inline">
+						   <input type="radio" name="right2_jump" {if $info['right2_jump'] == 3} checked {/if} value="3">活动页面
+					    </label>
+					    <label class="radio-inline">
+						   <input type="radio" name="right2_jump" {if $info['right2_jump'] == 4} checked {/if} value="4">跳转小程序
+					    </label>
+					    <label class="radio-inline">
+						   <input type="radio" name="right2_jump" {if $info['right2_jump'] == 5} checked {/if} value="5">口红小游戏
+					    </label>
+				        </div>
+			        </div>
+			        <div class="form-group ddd">
+						<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">小程序appid</label>
+						<div class="col-sm-8">
+							<input type="text" name="right2_appid" class="form-control" value="{$info['right2_appid']}">					
+						</div>
+					</div>
+					<div class="form-group ddd">
+						<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">小程序path</label>
+						<div class="col-sm-8">
+							<input type="text" name="right2_path" class="form-control" value="{$info['right2_path']}">					
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">右3图片</label>
+						<div class="col-sm-8">
+							{php echo tpl_form_field_image('right3',$info['right3']);}
+							<div style="color: red !important;">建议比例：300*130。
+						    </div>
+						</div>
+					</div>  
+					<div class="form-group">
+				        <label class="col-xs-12 col-sm-3 col-md-2 control-label">右3方块跳转</label>
+				        <div class="col-sm-9 col-xs-12" id="qie7">
+					    <label class="radio-inline">
+						   <input type="radio" name="right3_jump" {if $info['right3_jump'] == 0} checked {/if} value="0">步友圈
+					    </label>
+					    <label class="radio-inline">
+						   <input type="radio" name="right3_jump" {if $info['right3_jump'] == 1} checked {/if} value="1">任务功能
+					    </label>
+					    <label class="radio-inline">
+						   <input type="radio" name="right3_jump" {if $info['right3_jump'] == 2} checked {/if} value="2">步数商城
+					    </label>
+					    <label class="radio-inline">
+						   <input type="radio" name="right3_jump" {if $info['right3_jump'] == 3} checked {/if} value="3">活动页面
+					    </label>
+					    <label class="radio-inline">
+						   <input type="radio" name="right3_jump" {if $info['right3_jump'] == 4} checked {/if} value="4">跳转小程序
+					    </label>
+					    <label class="radio-inline">
+						   <input type="radio" name="right3_jump" {if $info['right3_jump'] == 5} checked {/if} value="5">口红小游戏
+					    </label>
+				        </div>
+			        </div>
+			        <div class="form-group eee">
+						<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">小程序appid</label>
+						<div class="col-sm-8">
+							<input type="text" name="right3_appid" class="form-control" value="{$info['right3_appid']}">					
+						</div>
+					</div>
+					<div class="form-group eee">
+						<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">小程序path</label>
+						<div class="col-sm-8">
+							<input type="text" name="right3_path" class="form-control" value="{$info['right3_path']}">					
+						</div>
+					</div>				  
+				</div>
+			</div>
+			<div class="panel-heading">
+				悬浮窗设置
+			</div>
+			<div class="panel-body">
+				<div class="tab-pane active" id="tab_param2">
+				    <div class="form-group">
+				        <label class="col-xs-12 col-sm-3 col-md-2 control-label">首页右下角漂浮按钮</label>
+				        <div class="col-sm-9 col-xs-12" id="qie">
+					    <label class="radio-inline">
+						   <input type="radio" name="is_float" {if $info['is_float'] == 0} checked {/if} value="0">不启用
+					    </label>
+					    <label class="radio-inline">
+						   <input type="radio" name="is_float" {if $info['is_float'] == 1} checked {/if} value="1">拨打电话
+					    </label>
+					    <label class="radio-inline">
+						   <input type="radio" name="is_float" {if $info['is_float'] == 2} checked {/if} value="2">复制文本(微信，qq等)
+					    </label>
+				        </div>
+			        </div>
+
+			        <div class="form-group two">
+						<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">电话号码</label>
+						<div class="col-sm-8">
+							<input type="text" name="phoneno" class="form-control" value="{$info['phoneno']}">								
+						</div>
+					</div>
+	                <div class="form-group two">
+						<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label"><span style="color:red">*</span>拨打电话图标</label>
+						<div class="col-sm-8">
+							{php echo tpl_form_field_image('call_icon',$info['call_icon']);}
+							<div style="color: red !important;">建议比例：200*200 。
+						    </div>
+						</div>
+					</div>             
+                    <div class="form-group three">
+						<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">文本</label>
+						<div class="col-sm-8">
+							<input type="text" name="copytext" class="form-control" value="{$info['copytext']}">	
+							<div style="color: red !important;">可以填写希望用户复制的文本，如微信号，qq号，手机号等。
+						    </div>							
+						</div>
+					</div>
+					<div class="form-group three">
+						<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label"><span style="color:red">*</span>复制文本图标</label>
+						<div class="col-sm-8">
+							{php echo tpl_form_field_image('copy_icon',$info['copy_icon']);}
+							<div style="color: red !important;">建议比例：200*200 。
+						    </div>
+						</div>
+					</div>            
+				</div>
+			</div>
+			<div class="panel-heading">
+				首页弹窗设置
+			</div>
+			<div class="panel-body">
+				<div class="tab-pane active" id="tab_param2">
+				    <div class="form-group">
+				        <label class="col-xs-12 col-sm-3 col-md-2 control-label">是否弹窗</label>
+				        <div class="col-sm-9 col-xs-12">
+					    <label class="radio-inline">
+						   <input type="radio" name="is_tan" {if $info['is_tan'] == 0} checked {/if} value="0">不开启
+					    </label>
+					    <label class="radio-inline">
+						   <input type="radio" name="is_tan" {if $info['is_tan'] == 1} checked {/if} value="1">开启(每天弹出一次)
+					    </label>
+				        </div>
+			        </div>
+			        <div class="form-group">
+				        <label class="col-xs-12 col-sm-3 col-md-2 control-label">点击弹窗跳转</label>
+				        <div class="col-sm-9 col-xs-12" id="qie2">
+					    <label class="radio-inline">
+						   <input type="radio" name="tan_type" {if $info['tan_type'] == 0} checked {/if} value="0">红包(弹窗图片直接调用红包裂变设置中的图)
+					    </label>
+					    <label class="radio-inline" data-name="{$info['tan_pic1']}">
+						   <input type="radio" name="tan_type" {if $info['tan_type'] == 1} checked {/if} value="1">步数商城
+					    </label>
+					    <label class="radio-inline" data-name="">
+						   <input type="radio" name="tan_type" {if $info['tan_type'] == 2} checked {/if} value="2">商品详情
+					    </label>
+					    <label class="radio-inline" data-name="">
+						   <input type="radio" name="tan_type" {if $info['tan_type'] == 3} checked {/if} value="3">弹窗图片(可用作开屏广告等)，不跳转
+					    </label>
+				        </div>
+			        </div>
+			        <div class="form-group five">
+			            <label class="col-xs-12 col-sm-3 col-md-2 control-label">选择要跳转的商品</label>
+				        <div class="col-md-3 mathyts ">
+	                       <select name="tan_goodsid" class="form-control form-control_s" >
+	                           {loop $goodslist $index $data}                           
+	                           <option value="{$data['id']}" {if $info['tan_goodsid'] == $data['id']}selected{/if}>{$data['goods_name']}</option>
+	                           {/loop}
+	                       </select>
+	                    </div>
+	                </div>
+	                <div class="form-group six">
+						<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label"><span style="color:red">*</span>弹窗图片</label>
+						<div class="col-sm-8">
+							<!-- {php echo tpl_form_field_image('tan_pic',$info['tan_pic']);} -->
+							<div class="input-group ">
+								<input type="text" name="tan_pic" value="{$info['tan_pic']}" class="form-control dhagvw" autocomplete="off">
+								<span class="input-group-btn">
+									<button class="btn btn-default" type="button" onclick="showImageDialog(this);">选择图片</button>
+								</span>
+							</div>
+							<div class="input-group " style="margin-top:.5em;">
+								<img src="{media $info['tan_pic']}" onerror="this.src='./resource/images/nopic.jpg'; this.title='图片未找到.'" class="img-responsive img-thumbnail urlimg" width="150">
+								<em class="close" style="position:absolute; top: 0px; right: -14px;" title="删除这张图片" onclick="deleteImage(this)">×</em>
+							</div>
+							<div style="color: red !important;">建议比例：936*1154 。
+						    </div>
+						</div>
+					</div>         
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group col-sm-12">
+			<input name="submit" type="submit" value="提交" class="btn btn-primary col-lg-1" {if $update_status == 1}disabled{/if}>
+			<input type="hidden" name="act" value="add" />
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+	$('#qie3').find('label').each(function(){			
+		$(this).click(function(){
+			var index=$(this).index()
+			if(index==0){
+				$('.aaa').hide()
+			}else if(index==1){
+				$('.aaa').hide()
+			}
+			else if(index==2){
+				$('.aaa').hide()
+			}
+			else if(index==3){
+				$('.aaa').hide()
+			}
+			else if(index==4){
+				$('.aaa').show()
+			}
+			else if(index==5){
+				$('.aaa').hide()
+			}
+		})
+	})
+	var index = $('#qie3 label').find(':radio:checked').val();
+	        if(index==0){
+				$('.aaa').hide()
+			}else if(index==1){
+				$('.aaa').hide()
+			}
+			else if(index==2){
+				$('.aaa').hide()
+			}
+			else if(index==3){
+				$('.aaa').hide()
+			}
+			else if(index==4){
+				$('.aaa').show()
+			}
+			else if(index==5){
+				$('.aaa').hide()
+			}
+</script>
+<script type="text/javascript">
+	$('#qie4').find('label').each(function(){			
+		$(this).click(function(){
+			var index=$(this).index()
+			if(index==0){
+				$('.bbb').hide()
+			}else if(index==1){
+				$('.bbb').hide()
+			}
+			else if(index==2){
+				$('.bbb').hide()
+			}
+			else if(index==3){
+				$('.bbb').hide()
+			}
+			else if(index==4){
+				$('.bbb').show()
+			}
+			else if(index==5){
+				$('.bbb').hide()
+			}
+		})
+	})
+	var index = $('#qie4 label').find(':radio:checked').val();
+	        if(index==0){
+				$('.bbb').hide()
+			}else if(index==1){
+				$('.bbb').hide()
+			}
+			else if(index==2){
+				$('.bbb').hide()
+			}
+			else if(index==3){
+				$('.bbb').hide()
+			}
+			else if(index==4){
+				$('.bbb').show()
+			}
+			else if(index==5){
+				$('.bbb').hide()
+			}
+</script>
+<script type="text/javascript">
+	$('#qie5').find('label').each(function(){			
+		$(this).click(function(){
+			var index=$(this).index()
+			if(index==0){
+				$('.ccc').hide()
+			}else if(index==1){
+				$('.ccc').hide()
+			}
+			else if(index==2){
+				$('.ccc').hide()
+			}
+			else if(index==3){
+				$('.ccc').hide()
+			}
+			else if(index==4){
+				$('.ccc').show()
+			}
+			else if(index==5){
+				$('.ccc').hide()
+			}
+		})
+	})
+	var index = $('#qie5 label').find(':radio:checked').val();
+	        if(index==0){
+				$('.ccc').hide()
+			}else if(index==1){
+				$('.ccc').hide()
+			}
+			else if(index==2){
+				$('.ccc').hide()
+			}
+			else if(index==3){
+				$('.ccc').hide()
+			}
+			else if(index==4){
+				$('.ccc').show()
+			}
+			else if(index==5){
+				$('.ccc').hide()
+			}
+</script>
+<script type="text/javascript">
+	$('#qie6').find('label').each(function(){			
+		$(this).click(function(){
+			var index=$(this).index()
+			if(index==0){
+				$('.ddd').hide()
+			}else if(index==1){
+				$('.ddd').hide()
+			}
+			else if(index==2){
+				$('.ddd').hide()
+			}
+			else if(index==3){
+				$('.ddd').hide()
+			}
+			else if(index==4){
+				$('.ddd').show()
+			}
+			else if(index==5){
+				$('.ddd').hide()
+			}
+		})
+	})
+	var index = $('#qie6 label').find(':radio:checked').val();
+	        if(index==0){
+				$('.ddd').hide()
+			}else if(index==1){
+				$('.ddd').hide()
+			}
+			else if(index==2){
+				$('.ddd').hide()
+			}
+			else if(index==3){
+				$('.ddd').hide()
+			}
+			else if(index==4){
+				$('.ddd').show()
+			}
+			else if(index==5){
+				$('.ddd').hide()
+			}
+</script>
+<script type="text/javascript">
+	$('#qie7').find('label').each(function(){			
+		$(this).click(function(){
+			var index=$(this).index()
+			if(index==0){
+				$('.eee').hide()
+			}else if(index==1){
+				$('.eee').hide()
+			}
+			else if(index==2){
+				$('.eee').hide()
+			}
+			else if(index==3){
+				$('.eee').hide()
+			}
+			else if(index==4){
+				$('.eee').show()
+			}
+			else if(index==5){
+				$('.eee').hide()
+			}
+		})
+	})
+	var index = $('#qie7 label').find(':radio:checked').val();
+	        if(index==0){
+				$('.eee').hide()
+			}else if(index==1){
+				$('.eee').hide()
+			}
+			else if(index==2){
+				$('.eee').hide()
+			}
+			else if(index==3){
+				$('.eee').hide()
+			}
+			else if(index==4){
+				$('.eee').show()
+			}
+			else if(index==5){
+				$('.eee').hide()
+			}
+</script>
+<script type="text/javascript">
+	$('#qie').find('label').each(function(){			
+		$(this).click(function(){
+			var index=$(this).index()
+			if(index==0){
+				$('.two').hide()
+				$('.three').hide()
+			}else if(index==1){
+				$('.two').show()
+				$('.three').hide()
+			}
+			else if(index==2){
+				$('.two').hide()
+				$('.three').show()
+			}
+		})
+	})
+	var index = $('#qie label').find(':radio:checked').val();
+	        if(index==0){
+				$('.two').hide()
+				$('.three').hide()
+			}else if(index==1){
+				$('.two').show()
+				$('.three').hide()
+			}
+			else if(index==2){
+				$('.two').hide()
+				$('.three').show()
+			}
+</script>
+<script type="text/javascript">
+	$('#qie2').find('label').each(function(){		
+	
+		$(this).click(function(){
+		var index=$(this).index()
+			var img=$(this).data("name")
+			$('.dhagvw').val(img)
+			$('.urlimg').attr("src",img);
+			console.log(img )
+			if(index==0){
+				$('.five').hide()
+				$('.six').hide()
+			}else if(index==1){
+				$('.five').hide()
+				$('.six').show()
+			}
+			else if(index==2){
+				$('.five').show()
+				$('.six').show()
+			}
+			else if(index==3){
+				$('.five').hide()
+				$('.six').show()
+			}
+		})
+	})
+	var index = $('#qie2 label').find(':radio:checked').val();
+	        if(index==0){
+				$('.five').hide()
+				$('.six').hide()
+			}else if(index==1){
+				$('.five').hide()
+				$('.six').show()
+			}
+			else if(index==2){
+				$('.five').show()
+				$('.six').show()
+			}
+			else if(index==3){
+				$('.five').hide()
+				$('.six').show()
+			}
+</script>
+<script type="text/javascript">
+	function showImageDialog(elm, opts, options) {
+		require(["util"], function(util){
+			var btn = $(elm);
+			var ipt = btn.parent().prev();
+			var val = ipt.val();
+			var img = ipt.parent().next().children();
+			options = {'global':false,'class_extra':'','direct':true,'multiple':false,'fileSizeLimit':52428800};
+			util.image(val, function(url){
+				if(url.url){
+					if(img.length > 0){
+						img.get(0).src = url.url;
+					}
+					ipt.val(url.attachment);
+					ipt.attr("filename",url.filename);
+					ipt.attr("url",url.url);
+				}
+				if(url.media_id){
+					if(img.length > 0){
+						img.get(0).src = "";
+					}
+					ipt.val(url.media_id);
+				}
+			}, options);
+		});
+	}
+	function deleteImage(elm){
+		$(elm).prev().attr("src", "./resource/images/nopic.jpg");
+		$(elm).parent().prev().find("input").val("");
+	}
+	function img(){
+		alert(img)
+	}
+</script>
+
+
+{template 'common/footer'}

@@ -1,0 +1,65 @@
+{template 'common/header'}
+<style>
+	.dag,.dagtwo,.dagthree,.dagfor{
+		display:none;
+	}
+</style>
+<ul class="nav nav-tabs">
+	<li><a href="{php echo $this->createWebUrl('byq')}">动态审核</a></li>
+	<li><a href="{php echo $this->createWebUrl('topic')}">话题列表</a></li>
+	<li class="active"><a href="{php echo $this->createWebUrl('topic_post')}">添加话题</a></li>
+	<li><a href="{php echo $this->createWebUrl('byq_set')}">设置</a></li>
+</ul>
+<div class="clearfix">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" onsubmit="return formcheck()">
+		<input type="hidden" name="id" value="{$info['id']}">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				设置
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">排序</label>
+					<div class="col-sm-4 col-xs-12">
+						<input type="text" name="displayorder" class="form-control" value="{$info['displayorder']}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style="color:red">*</span>话题名</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" id="advname" name="title" class="form-control" value="{$info['title']}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">话题顶部图片</label>
+					<div class="col-sm-9 col-xs-12">
+						 {php echo tpl_form_field_image('toppic',$info[toppic]);}
+						<span class="help-block">图标图片，建议400*150</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否显示</label>
+					<div class="col-sm-9 col-xs-12">
+						<label class="radio-inline">
+							<input type="radio" name="status" {if $info['status'] == 1} checked {/if} value="1"> 是
+						</label>
+						<label class="radio-inline" >
+							<input type="radio" name="status" value="0" {if $info['status'] != 1} checked {/if}> 否
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group col-sm-12">
+			<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1">
+			{if empty($info['id'])}
+				<input type="hidden" name="act" value="add">
+			{else}
+				<input type="hidden" name="act" value="edit">
+			{/if}
+		</div>
+	</form>
+
+</div>
+
+{template 'common/footer'}

@@ -1,0 +1,67 @@
+{template 'common/header'}
+
+<div class="clearfix">
+<ul class="nav nav-tabs">
+	<li class="active"><a href="{php echo $this->createWebUrl('mission')}">任务列表</a></li>
+	<li><a href="{php echo $this->createWebUrl('mission_post')}">添加任务</a></li>
+	<li><a href="{php echo $this->createWebUrl('missionlog')}">任务记录</a></li>
+</ul>
+<div class="panel panel-default">
+	<div class="panel-heading">任务功能</div>
+	<div class="panel-body">
+		<sapn style="color:red;">任务功能功能入口，请在基本设置-》其他设置中按需添加。注意：“首次发帖任务”，“邀请好友任务”，“绑定手机号任务”只能添加一次，跳转小程序可添加多次。</sapn>
+	</div>
+</div>
+<div class="main panel panel-default">
+	<div class="table-responsive">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:5%;" class="text-center">id</th>
+					<th style="width:10%;" class="text-center">任务名</th>
+					<th style="width:10%;" class="text-center">图标</th>
+					<th style="width:10%;" class="text-center">类型</th>
+					<th style="width:10%;" class="text-center">奖励</th>
+					<th style="width:10%;" class="text-center">排序</th>					
+					<th class="text-right" style="width:15%;" class="text-center">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $index $item}
+				<tr>
+					<td class="text-center">{$item['id']}</td>
+					<td class="text-center">{$item['title']}</td>			
+					<td class="text-center"><img class="scrollLoading" src="{media $item['mission_icon']}" data-url="{media $item['mission_icon']}" onerror="this.src='/web/resource/images/nopic-small.jpg'" height="50" width="50"></td>
+					<td class="text-center">{$item['mission_type']}</td>
+					<td class="text-center">{$item['step']}</td>
+					<td class="text-center">{$item['displayorder']}</td>
+					<td class="text-right">
+						<a href="{php echo $this->createWebUrl('mission_post',array('id'=>$item['id']))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="修改"><i class="fa fa-edit"></i></a>
+						<a href="{php echo $this->createWebUrl('mission_post',array('act'=>'del','id'=>$item['id']))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="删除"><i class="fa fa-times"></i></a>
+					</td>
+				</tr>
+				{/loop}
+				{if empty($list) }
+                <tr ng-if="!wechats">
+                <td colspan="9" class="text-center">暂无数据</td>
+                </tr>
+                {/if}
+                <tr>
+					<td colspan="9" style="text-align:right">{$page}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<script>
+	require(['bootstrap'],function($){
+		$('.btn').hover(function(){
+			$(this).tooltip('show');
+		},function(){
+			$(this).tooltip('hide');
+		});
+	});
+</script>
+</div>
+
+{template 'common/footer'}

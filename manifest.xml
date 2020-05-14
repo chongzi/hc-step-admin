@@ -1,0 +1,836 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.zx-app.cn" versionCode="0.8,1.0">
+	<application setting="false">
+		<name><![CDATA[步数宝步数换购]]></name>
+		<identifie><![CDATA[hc_step]]></identifie>
+		<version><![CDATA[8.2.1]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[步数宝步数换购]]></ability>
+		<description><![CDATA[步数宝步数换购]]></description>
+		<author><![CDATA[zxgc]]></author>
+		<url><![CDATA[https://www.zx-app.cn/]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+
+		<handles>
+		</handles>
+
+		<rule embed="false" />
+		<card embed="false" />
+		
+		<supports>
+			<item type="wxapp" />
+		</supports>
+        <plugins></plugins> 
+        <plugin-main name="" />
+
+	</platform>
+
+	<bindings>
+		<menu>
+			<entry title="步友圈" do="byq" state="" direct="false"/>
+			<entry title="任务管理" do="mission" state="" direct="false"/>
+			<entry title="基本设置" do="setting" state="" direct="false"/>
+			<entry title="商品管理" do="goods" state="" direct="false"/>
+			<entry title="奖品管理" do="awards" state="" direct="false"/>
+			<entry title="用户列表" do="users" state="" direct="false"/>
+			<entry title="兑换记录" do="exchange" state="" direct="false"/>
+			<entry title="常见问题" do="question" state="" direct="false"/>
+			<entry title="广告位" do="adv" state="" direct="false"/>
+			<entry title="步数挑战" do="activity" state="" direct="false"/>
+			<entry title="首页右侧栏图标" do="icon" state="" direct="false"/>
+			<entry title="邀请送币营销功能" do="hongbao" state="" direct="false"/>
+			<entry title="客服消息" do="kefu" state="" direct="false"/>
+			<entry title="门店管理" do="shop" state="" direct="false"/>
+			<entry title="红包裂变" do="fourhb" state="" direct="false"/>
+			<entry title="活动管理" do="huodong" state="" direct="false"/>
+			<entry title="口红小游戏" do="kouhong" state="" direct="false"/>
+		</menu>
+		<page>
+			<entry title="首页" do="/hc_step/pages/index/index" state="" direct="false"/>
+		</page>
+
+	</bindings>
+
+	<permissions>
+	</permissions>
+
+	<install><![CDATA[
+CREATE TABLE IF NOT EXISTS `ims_hcstep_activity` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `step` varchar(255) DEFAULT NULL,
+  `entryfee` varchar(255) DEFAULT NULL,
+  `displayorder` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_activitylog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `aid` int(11) DEFAULT NULL COMMENT '活动id',
+  `timestamp` varchar(255) DEFAULT NULL,
+  `time` varchar(255) DEFAULT NULL,
+  `entryfee` varchar(255) DEFAULT NULL,
+  `step` varchar(255) DEFAULT NULL,
+  `status` int(11) NOT NULL COMMENT '0未达标1已达标，未发奖2已达标，已发奖',
+  `jiangjin` varchar(255) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`,`aid`,`time`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_adv` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT '0',
+  `advname` varchar(50) DEFAULT '',
+  `thumb` varchar(255) DEFAULT '',
+  `displayorder` int(11) DEFAULT '0',
+  `enabled` int(11) DEFAULT '0',
+  `jump` int(11) NOT NULL COMMENT '跳转方式 0 不跳转 1 小程序',
+  `xcxpath` varchar(255) NOT NULL,
+  `xcxappid` varchar(255) NOT NULL,
+  `h5` varchar(255) NOT NULL,
+  `tippic` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_uniacid` (`uniacid`),
+  KEY `idx_enabled` (`enabled`),
+  KEY `idx_displayorder` (`displayorder`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_awards` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `goods_name` varchar(255) DEFAULT NULL,
+  `main_img` varchar(255) DEFAULT NULL,
+  `goods_img` varchar(2555) DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `inventory` varchar(255) DEFAULT NULL,
+  `express` varchar(255) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL COMMENT '1 上架 2 下架',
+  `rate` varchar(10) NOT NULL COMMENT '中奖率',
+  `awards_type` int(11) NOT NULL DEFAULT '1' COMMENT '1真实商品2步数币3红包',
+  `awards_coin` varchar(10) NOT NULL,
+  `awards_money` decimal(10,2) NOT NULL,
+  `sort` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_bushulog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `uniacid` int(11) DEFAULT NULL,
+  `bushu` varchar(255) DEFAULT NULL,
+  `money` varchar(255) DEFAULT NULL,
+  `time` varchar(255) DEFAULT NULL,
+  `timestamp` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`uniacid`,`user_id`,`time`)
+) ENGINE=MyISAM AUTO_INCREMENT=12185 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_comment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL COMMENT '评论人',
+  `dt_id` int(11) DEFAULT NULL COMMENT '评论的哪条动态',
+  `content` varchar(1000) DEFAULT NULL COMMENT '评论的内容',
+  `time` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`uniacid`,`user_id`,`dt_id`) USING BTREE
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_dt` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `content` varchar(2555) DEFAULT NULL COMMENT '文字内容',
+  `position` varchar(255) NOT NULL,
+  `content_img` varchar(2555) DEFAULT NULL,
+  `comment` varchar(1000) DEFAULT NULL COMMENT '评论id集合',
+  `zan` varchar(11) DEFAULT NULL COMMENT '点赞数',
+  `time` varchar(20) DEFAULT NULL,
+  `topic_id` int(11) DEFAULT NULL COMMENT '话题id',
+  `status` int(11) NOT NULL,
+  `latitude` varchar(50) NOT NULL,
+  `longitude` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `uniacid` (`uniacid`),
+  KEY `status` (`status`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_follow` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL COMMENT '关注人',
+  `follow_id` int(11) DEFAULT NULL COMMENT '被关注人',
+  `time` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uniacid` (`uniacid`,`user_id`,`follow_id`) USING BTREE
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_formid` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `formid` varchar(255) DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_fourhblog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `son_id` int(11) DEFAULT NULL,
+  `hbmoney` decimal(10,2) DEFAULT NULL,
+  `time` varchar(50) DEFAULT NULL,
+  `daytime` varchar(50) DEFAULT NULL,
+  `type` int(11) NOT NULL COMMENT '1大红包2小红包',
+  `status` int(11) NOT NULL DEFAULT '0' COMMENT '0待解锁1待开启2已开启',
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`uniacid`,`type`,`status`,`daytime`,`user_id`,`son_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_goods` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `goods_name` varchar(255) DEFAULT NULL,
+  `main_img` varchar(255) DEFAULT NULL,
+  `goods_img` varchar(2555) DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `inventory` varchar(255) DEFAULT NULL,
+  `express` varchar(255) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL COMMENT '1 上架 2 下架',
+  `displayorder` int(11) NOT NULL,
+  `goodsinfo` varchar(9999) NOT NULL,
+  `paytype` int(11) NOT NULL COMMENT '支付方式',
+  `price2` decimal(10,2) NOT NULL COMMENT '步数加钱 步数币',
+  `rmb` varchar(255) NOT NULL COMMENT '人民币',
+  `maxrmb` varchar(255) NOT NULL COMMENT '人民币原价',
+  `selltype` int(11) NOT NULL COMMENT '0普通1核销',
+  `shop_id` int(11) NOT NULL,
+  `minpeople` varchar(20) NOT NULL COMMENT '邀请人数',
+  `maxbuy` varchar(20) NOT NULL DEFAULT '0',
+  `indexsort_id` int(11) NOT NULL,
+  `sort_id` int(11) NOT NULL,
+  `is_hongbao` int(11) NOT NULL,
+  `maxhongbao` varchar(20) NOT NULL,
+  `validity` varchar(20) NOT NULL DEFAULT '0' COMMENT '核销码有效期',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_guanzhulog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `step` varchar(255) DEFAULT NULL,
+  `time` varchar(255) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_hbwith` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `money` decimal(10,2) DEFAULT NULL,
+  `add_time` varchar(255) DEFAULT NULL,
+  `pay_time` varchar(255) DEFAULT NULL,
+  `partner_trade_no` varchar(255) DEFAULT NULL,
+  `status` int(11) DEFAULT '0',
+  `nick_name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_hongbao` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT '0',
+  `hongbaopic` varchar(255) DEFAULT '',
+  `displayorder` int(11) DEFAULT '0',
+  `enabled` int(11) DEFAULT '0',
+  `hongbaomoney` varchar(255) NOT NULL,
+  `hongbaoname` varchar(255) NOT NULL,
+  `hongbaonamecolor` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_uniacid` (`uniacid`),
+  KEY `idx_enabled` (`enabled`),
+  KEY `idx_displayorder` (`displayorder`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_hongbaolog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `sonid` int(11) DEFAULT NULL,
+  `invite_time` varchar(255) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_huodong` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `displayorder` varchar(20) DEFAULT '' COMMENT '排序',
+  `jump` varchar(20) DEFAULT NULL COMMENT '1抽奖2步数挑战3步数商城4小程序5h5',
+  `entrypic` varchar(100) DEFAULT NULL,
+  `xcxpath` varchar(255) DEFAULT NULL,
+  `xcxappid` varchar(255) DEFAULT NULL,
+  `h5` varchar(255) DEFAULT NULL,
+  `diypic` varchar(255) NOT NULL,
+  `step` varchar(50) NOT NULL,
+  `ad` varchar(55) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_icon` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT '0',
+  `advname` varchar(50) DEFAULT '',
+  `thumb` varchar(255) DEFAULT '',
+  `displayorder` int(11) DEFAULT '0',
+  `enabled` int(11) DEFAULT '0',
+  `jump` int(11) NOT NULL COMMENT '跳转方式 0 运动提醒1汗水日子2其他',
+  `xcxpath` varchar(255) NOT NULL,
+  `xcxappid` varchar(255) NOT NULL,
+  `runpic` varchar(255) NOT NULL,
+  `advnamecolor` varchar(100) NOT NULL,
+  `h5` varchar(255) NOT NULL,
+  `tippic` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_uniacid` (`uniacid`),
+  KEY `idx_enabled` (`enabled`),
+  KEY `idx_displayorder` (`displayorder`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_invitelog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `sonid` int(11) DEFAULT NULL,
+  `step` varchar(255) DEFAULT NULL,
+  `invite_time` varchar(255) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL COMMENT '0 未兑换燃力币 1 已兑换',
+  `time` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=160 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_kefu` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `kefu_keyword` varchar(255) DEFAULT NULL,
+  `kefu_title` varchar(255) DEFAULT NULL,
+  `kefu_img` varchar(255) DEFAULT NULL,
+  `kefu_gaishu` varchar(255) DEFAULT NULL,
+  `kefu_url` varchar(255) DEFAULT NULL,
+  `beizhu` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_kouhonglog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `createtime` varchar(20) DEFAULT NULL,
+  `createday` varchar(20) DEFAULT NULL,
+  `goods_id` varchar(20) DEFAULT NULL,
+  `invite_id` varchar(100) DEFAULT NULL,
+  `status` int(11) DEFAULT '0' COMMENT '0挑战失败1挑战成功',
+  `cishu` int(20) DEFAULT '0' COMMENT '0挑战零次没挑战直接邀请好友1直接开始挑战2满足条件后挑战第二次',
+  PRIMARY KEY (`id`),
+  KEY `uniacid` (`uniacid`,`user_id`,`createday`) USING BTREE
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_message` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `msgid` varchar(255) DEFAULT NULL,
+  `keyword1` varchar(255) DEFAULT NULL,
+  `keyword2` varchar(255) DEFAULT NULL,
+  `keyword3` varchar(255) DEFAULT NULL,
+  `hongbao_msgid` varchar(255) NOT NULL,
+  `fahuomsgid` varchar(255) NOT NULL,
+  `notice` varchar(255) NOT NULL,
+  `rolltime` varchar(255) NOT NULL,
+  `status` int(11) NOT NULL,
+  `centerhead` varchar(55) NOT NULL,
+  `invite_icon` varchar(55) NOT NULL,
+  `rule_icon` varchar(55) NOT NULL,
+  `qs_icon` varchar(55) NOT NULL,
+  `news_icon` varchar(55) NOT NULL,
+  `contact_icon` varchar(55) NOT NULL,
+  `ka_icon` varchar(55) NOT NULL,
+  `set_icon` varchar(55) NOT NULL,
+  `dhcolor` varchar(55) NOT NULL,
+  `name_color` varchar(55) NOT NULL,
+  `id_color` varchar(55) NOT NULL,
+  `dhjl_color` varchar(55) NOT NULL,
+  `idbg_color` varchar(55) NOT NULL,
+  `is_fourhb` int(11) NOT NULL,
+  `fourhb_sharetitle` varchar(100) NOT NULL,
+  `fourhb_sharepic` varchar(100) NOT NULL,
+  `min_bighbmoney` decimal(10,2) NOT NULL,
+  `max_bighbmoney` decimal(10,2) NOT NULL,
+  `min_smallhbmoney` decimal(10,2) NOT NULL,
+  `max_smallhbmoney` decimal(10,2) NOT NULL,
+  `min_hbtxmoney` decimal(10,2) NOT NULL,
+  `txinfo` varchar(255) NOT NULL,
+  `hbtext1` varchar(100) NOT NULL,
+  `hbtext2` varchar(100) NOT NULL,
+  `txcolor` varchar(50) NOT NULL,
+  `txjl_color` varchar(50) NOT NULL,
+  `fourhb_mainpic` varchar(60) NOT NULL,
+  `daijiesuo` varchar(60) NOT NULL,
+  `daikaiqi` varchar(60) NOT NULL,
+  `yikaiqi` varchar(60) NOT NULL,
+  `hb_icon` varchar(60) NOT NULL,
+  `openhbpic` varchar(60) NOT NULL,
+  `lotto_type` int(11) NOT NULL DEFAULT '1',
+  `fourhb_coin` varchar(10) NOT NULL,
+  `is_float` int(11) NOT NULL COMMENT '0不显示1电话2微信',
+  `phoneno` varchar(20) NOT NULL,
+  `call_icon` varchar(60) NOT NULL,
+  `copytext` varchar(100) NOT NULL,
+  `copy_icon` varchar(60) NOT NULL,
+  `is_tan` int(11) NOT NULL,
+  `tan_type` int(11) NOT NULL,
+  `tan_goodsid` varchar(20) NOT NULL,
+  `tan_pic` varchar(100) NOT NULL,
+  `left1` varchar(100) NOT NULL,
+  `left1_jump` int(11) NOT NULL,
+  `left1_appid` varchar(50) NOT NULL,
+  `left1_path` varchar(50) NOT NULL,
+  `left2` varchar(100) NOT NULL,
+  `left2_jump` int(11) NOT NULL,
+  `left2_appid` varchar(50) NOT NULL,
+  `left2_path` varchar(50) NOT NULL,
+  `right1` varchar(100) NOT NULL,
+  `right1_jump` int(11) NOT NULL,
+  `right1_appid` varchar(50) NOT NULL,
+  `right1_path` varchar(50) NOT NULL,
+  `right2` varchar(100) NOT NULL,
+  `right2_jump` int(11) NOT NULL,
+  `right2_appid` varchar(50) NOT NULL,
+  `right2_path` varchar(50) NOT NULL,
+  `right3` varchar(100) NOT NULL,
+  `right3_jump` int(11) NOT NULL,
+  `right3_appid` varchar(50) NOT NULL,
+  `right3_path` varchar(50) NOT NULL,
+  `is_five` int(11) NOT NULL,
+  `icon_position` int(11) NOT NULL,
+  `fabu_icon` varchar(60) NOT NULL,
+  `kouhong_sharetitle` varchar(100) NOT NULL,
+  `kouhong_sharepic` varchar(100) NOT NULL,
+  `kouhong_ids` varchar(100) NOT NULL,
+  `order_icon` varchar(60) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_mission` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `title2` varchar(255) DEFAULT NULL,
+  `mission_type` int(11) DEFAULT NULL COMMENT '0邀请好友1跳转小程序2步友圈首次发帖3绑定手机',
+  `mission_icon` varchar(255) DEFAULT NULL,
+  `step` varchar(20) DEFAULT NULL,
+  `appid` varchar(100) DEFAULT NULL,
+  `path` varchar(100) DEFAULT NULL,
+  `displayorder` int(11) NOT NULL,
+  `ad` varchar(50) NOT NULL COMMENT '视频广告id',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_missionlog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `mission_id` int(11) DEFAULT NULL,
+  `step` varchar(20) DEFAULT NULL,
+  `time` varchar(20) DEFAULT NULL,
+  `daytime` varchar(50) NOT NULL,
+  `status` int(11) DEFAULT NULL COMMENT '0完成任务未领取步数1领取步数',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uniacid` (`uniacid`,`user_id`,`mission_id`) USING BTREE
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_news` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `makenews_uid` int(11) DEFAULT NULL,
+  `dt_id` int(11) NOT NULL,
+  `type` int(11) DEFAULT NULL COMMENT '1点赞2关注3评论',
+  `time` varchar(20) DEFAULT NULL,
+  `status` int(11) NOT NULL COMMENT '0未读1已读',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_orders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `userName` varchar(255) DEFAULT NULL,
+  `postalCode` varchar(255) DEFAULT NULL,
+  `provinceName` varchar(255) DEFAULT NULL,
+  `cityName` varchar(255) DEFAULT NULL,
+  `countyName` varchar(255) DEFAULT NULL,
+  `detailInfo` varchar(255) DEFAULT NULL,
+  `nationalCode` varchar(255) DEFAULT NULL,
+  `telNumber` varchar(255) DEFAULT NULL,
+  `goods_id` int(11) DEFAULT NULL,
+  `time` varchar(255) NOT NULL,
+  `status` int(11) NOT NULL COMMENT '0待发货1已发货',
+  `type` int(11) NOT NULL COMMENT '0原价1币加钱2纯币',
+  `oid` int(11) NOT NULL COMMENT '支付表id',
+  `express` varchar(255) NOT NULL,
+  `fahuotime` varchar(255) NOT NULL,
+  `expressname` varchar(255) NOT NULL COMMENT '快递公司名',
+  `hexiaostatus` int(11) DEFAULT '0' COMMENT '0未核销1已核销',
+  `hexiaotime` varchar(255) NOT NULL,
+  `hexiaoyuan` int(11) NOT NULL COMMENT '核销员id',
+  `endtime` varchar(60) NOT NULL COMMENT '核销码到期时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=135 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_payment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `weid` int(11) DEFAULT '0',
+  `uid` int(11) DEFAULT '0',
+  `ordersn` varchar(30) DEFAULT '',
+  `goods_id` int(11) DEFAULT NULL COMMENT '商品id',
+  `paytype` int(11) NOT NULL COMMENT '0原价1步数加钱',
+  `fee` decimal(11,2) NOT NULL,
+  `status` tinyint(1) DEFAULT '0',
+  `paystatus` tinyint(1) NOT NULL DEFAULT '0',
+  `paytime` char(10) NOT NULL,
+  `transid` varchar(50) DEFAULT '',
+  `createtime` int(10) DEFAULT '0',
+  `package` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_peoplelog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `goods_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `son_id` int(11) DEFAULT NULL,
+  `time` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_question` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) NOT NULL,
+  `displayorder` int(11) NOT NULL,
+  `title` varchar(200) NOT NULL,
+  `thumb` varchar(200) NOT NULL,
+  `link` varchar(200) NOT NULL,
+  `content` text NOT NULL,
+  `enabled` tinyint(3) NOT NULL,
+  `createtime` char(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_set` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `sharetitle` varchar(255) DEFAULT NULL,
+  `sharepic` varchar(255) DEFAULT NULL,
+  `coinname` varchar(255) DEFAULT NULL,
+  `rate` varchar(255) DEFAULT NULL,
+  `sharestep` varchar(255) DEFAULT NULL,
+  `boxprice` varchar(255) DEFAULT NULL,
+  `rulepic` varchar(255) DEFAULT NULL,
+  `headcolor` varchar(255) NOT NULL,
+  `xcx` varchar(255) NOT NULL,
+  `up` varchar(255) NOT NULL,
+  `notice` varchar(5000) NOT NULL,
+  `shenhe` int(11) NOT NULL,
+  `loginpic` varchar(255) NOT NULL,
+  `indexbg` varchar(255) NOT NULL,
+  `indexbutton` varchar(255) NOT NULL,
+  `inviteball` varchar(255) NOT NULL,
+  `upball` varchar(255) NOT NULL,
+  `zerotip` varchar(255) NOT NULL,
+  `poortip` varchar(255) NOT NULL,
+  `questionpic` varchar(255) NOT NULL,
+  `is_follow` int(11) NOT NULL,
+  `followpic` varchar(255) NOT NULL,
+  `kefu_title` varchar(255) NOT NULL,
+  `kefu_img` varchar(255) NOT NULL,
+  `kefu_gaishu` varchar(255) NOT NULL,
+  `kefu_url` varchar(255) NOT NULL,
+  `kefupic` varchar(255) NOT NULL,
+  `guanzhu_step` varchar(255) NOT NULL,
+  `followlogo` varchar(255) NOT NULL,
+  `maxstep` varchar(255) NOT NULL,
+  `sharetext` varchar(255) NOT NULL,
+  `version` varchar(255) NOT NULL,
+  `shareinfo` varchar(255) NOT NULL,
+  `upinfo` varchar(255) NOT NULL,
+  `adunit` varchar(255) NOT NULL,
+  `adunit2` varchar(255) NOT NULL,
+  `adunit3` varchar(255) NOT NULL,
+  `boxpic` varchar(255) NOT NULL,
+  `activitypic` varchar(255) NOT NULL,
+  `applypic` varchar(255) NOT NULL,
+  `rule` varchar(255) NOT NULL,
+  `sweattext` varchar(255) NOT NULL,
+  `icon` varchar(255) NOT NULL,
+  `comeon` varchar(255) NOT NULL,
+  `posterpic` varchar(255) NOT NULL,
+  `smalltip` varchar(255) NOT NULL,
+  `signsharetext` varchar(255) NOT NULL,
+  `signpic` varchar(255) NOT NULL,
+  `signsharemoney` varchar(255) NOT NULL,
+  `frame` varchar(255) NOT NULL,
+  `signicon` varchar(255) NOT NULL,
+  `signtext` varchar(255) NOT NULL,
+  `smalltipcolor` varchar(100) NOT NULL,
+  `sharetextcolor` varchar(100) NOT NULL,
+  `shareinfocolor` varchar(100) NOT NULL,
+  `signtextcolor` varchar(100) NOT NULL,
+  `buttonbg` varchar(100) NOT NULL,
+  `balltextcolor` varchar(100) NOT NULL,
+  `centercolor` varchar(100) NOT NULL,
+  `coinpic` varchar(100) NOT NULL,
+  `cointextcolor` varchar(100) NOT NULL,
+  `invitetype` int(11) NOT NULL DEFAULT '1',
+  `hongbaobg` varchar(100) NOT NULL,
+  `longbg` varchar(100) NOT NULL,
+  `hongbaotext` varchar(100) NOT NULL,
+  `adunit4` varchar(50) NOT NULL,
+  `adunit5` varchar(50) NOT NULL,
+  `sweatcolor` varchar(20) NOT NULL,
+  `updatetip` varchar(100) NOT NULL,
+  `updatepic` varchar(55) NOT NULL,
+  `updatetipcolor` varchar(10) NOT NULL,
+  `goodstop` varchar(55) NOT NULL,
+  `adunit6` varchar(50) NOT NULL,
+  `posterpic2` varchar(60) NOT NULL,
+  `posterpic3` varchar(60) NOT NULL,
+  `is_qian` int(11) NOT NULL DEFAULT '1',
+  `is_kuang` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_shipinlog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `step` varchar(255) DEFAULT NULL,
+  `time` varchar(255) DEFAULT NULL,
+  `daytime` varchar(255) DEFAULT NULL,
+  `status` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `uniacid` (`uniacid`),
+  KEY `status` (`status`),
+  KEY `daytime` (`daytime`),
+  KEY `user_id` (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_shop` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `logo` varchar(255) DEFAULT NULL,
+  `topbg` varchar(255) NOT NULL,
+  `shopname` varchar(255) NOT NULL,
+  `sheng` varchar(255) DEFAULT NULL,
+  `shi` varchar(255) DEFAULT NULL,
+  `qu` varchar(255) DEFAULT NULL,
+  `tel` varchar(255) DEFAULT NULL,
+  `starttime` varchar(255) DEFAULT NULL,
+  `endtime` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `user_id` varchar(500) NOT NULL,
+  `openid` varchar(255) DEFAULT NULL,
+  `lat` varchar(20) NOT NULL,
+  `lng` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_sort` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT '0',
+  `advname` varchar(50) DEFAULT '',
+  `type` int(11) DEFAULT NULL,
+  `displayorder` int(11) DEFAULT '0',
+  `enabled` int(11) DEFAULT '0',
+  `is_distance` int(11) NOT NULL DEFAULT '0' COMMENT '是否按距离排序',
+  PRIMARY KEY (`id`),
+  KEY `idx_uniacid` (`uniacid`),
+  KEY `idx_enabled` (`enabled`),
+  KEY `idx_displayorder` (`displayorder`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_topic` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `displayorder` varchar(20) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL COMMENT '0不显示1显示',
+  `toppic` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_uplog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `step` varchar(255) DEFAULT NULL,
+  `time` varchar(255) DEFAULT NULL,
+  `day` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=769 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_users` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT '1',
+  `city` varchar(255) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `gender` varchar(255) DEFAULT NULL,
+  `open_id` varchar(255) DEFAULT NULL,
+  `nick_name` varchar(255) DEFAULT NULL,
+  `head_pic` varchar(255) DEFAULT NULL,
+  `province` varchar(255) DEFAULT NULL,
+  `money` decimal(11,4) NOT NULL DEFAULT '0.0000' COMMENT '可提现金额',
+  `fatherid` int(11) DEFAULT NULL,
+  `black` int(11) NOT NULL DEFAULT '0' COMMENT '0正常1拉黑',
+  `is_yy` int(11) NOT NULL DEFAULT '0',
+  `signtime` varchar(255) NOT NULL DEFAULT '1' COMMENT '连续签到次数',
+  `lasttime` varchar(255) NOT NULL COMMENT '最后签到时间',
+  `sharetime` varchar(255) NOT NULL,
+  `hongbaofid` int(11) NOT NULL DEFAULT '0',
+  `rmb` decimal(10,2) DEFAULT '0.00',
+  `tantime` varchar(50) NOT NULL,
+  `mobile` varchar(20) NOT NULL COMMENT '手机号',
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `KEY` (`uniacid`,`open_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2318 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_winlog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `userName` varchar(255) NOT NULL,
+  `postalCode` varchar(255) NOT NULL,
+  `provinceName` varchar(255) NOT NULL,
+  `cityName` varchar(255) NOT NULL,
+  `countyName` varchar(255) NOT NULL,
+  `detailInfo` varchar(255) NOT NULL,
+  `nationalCode` varchar(255) NOT NULL,
+  `telNumber` varchar(255) NOT NULL,
+  `goods_id` int(11) DEFAULT NULL,
+  `time` varchar(255) NOT NULL,
+  `status` int(11) NOT NULL COMMENT '0待发货1已发货',
+  `express` varchar(255) NOT NULL,
+  `fahuotime` varchar(255) NOT NULL,
+  `expressname` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=504 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_xuni` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `nick_name` varchar(255) DEFAULT NULL,
+  `head_pic` varchar(255) DEFAULT NULL,
+  `goods_id` int(11) DEFAULT NULL,
+  `time` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hcstep_zan` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `dt_id` int(11) DEFAULT NULL,
+  `target_id` int(11) NOT NULL COMMENT '被点赞人id',
+  PRIMARY KEY (`id`),
+  KEY `uniacid` (`uniacid`,`user_id`,`dt_id`) USING BTREE
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+]]></install>
+	<uninstall><![CDATA[DROP TABLE IF EXISTS `ims_hcstep_activity`;
+DROP TABLE IF EXISTS `ims_hcstep_activitylog`;
+DROP TABLE IF EXISTS `ims_hcstep_adv`;
+DROP TABLE IF EXISTS `ims_hcstep_awards`;
+DROP TABLE IF EXISTS `ims_hcstep_bushulog`;
+DROP TABLE IF EXISTS `ims_hcstep_comment`;
+DROP TABLE IF EXISTS `ims_hcstep_dt`;
+DROP TABLE IF EXISTS `ims_hcstep_follow`;
+DROP TABLE IF EXISTS `ims_hcstep_formid`;
+DROP TABLE IF EXISTS `ims_hcstep_fourhblog`;
+DROP TABLE IF EXISTS `ims_hcstep_goods`;
+DROP TABLE IF EXISTS `ims_hcstep_guanzhulog`;
+DROP TABLE IF EXISTS `ims_hcstep_hbwith`;
+DROP TABLE IF EXISTS `ims_hcstep_hongbao`;
+DROP TABLE IF EXISTS `ims_hcstep_hongbaolog`;
+DROP TABLE IF EXISTS `ims_hcstep_huodong`;
+DROP TABLE IF EXISTS `ims_hcstep_icon`;
+DROP TABLE IF EXISTS `ims_hcstep_invitelog`;
+DROP TABLE IF EXISTS `ims_hcstep_kefu`;
+DROP TABLE IF EXISTS `ims_hcstep_kouhonglog`;
+DROP TABLE IF EXISTS `ims_hcstep_message`;
+DROP TABLE IF EXISTS `ims_hcstep_mission`;
+DROP TABLE IF EXISTS `ims_hcstep_missionlog`;
+DROP TABLE IF EXISTS `ims_hcstep_news`;
+DROP TABLE IF EXISTS `ims_hcstep_orders`;
+DROP TABLE IF EXISTS `ims_hcstep_payment`;
+DROP TABLE IF EXISTS `ims_hcstep_peoplelog`;
+DROP TABLE IF EXISTS `ims_hcstep_question`;
+DROP TABLE IF EXISTS `ims_hcstep_set`;
+DROP TABLE IF EXISTS `ims_hcstep_shipinlog`;
+DROP TABLE IF EXISTS `ims_hcstep_shop`;
+DROP TABLE IF EXISTS `ims_hcstep_sort`;
+DROP TABLE IF EXISTS `ims_hcstep_topic`;
+DROP TABLE IF EXISTS `ims_hcstep_uplog`;
+DROP TABLE IF EXISTS `ims_hcstep_users`;
+DROP TABLE IF EXISTS `ims_hcstep_winlog`;
+DROP TABLE IF EXISTS `ims_hcstep_xuni`;
+DROP TABLE IF EXISTS `ims_hcstep_zan`;
+]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+
+</manifest>

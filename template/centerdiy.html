@@ -1,0 +1,165 @@
+{template 'common/header'}
+<script src="/addons/hc_pdd/template/js/color.js"></script>
+<ul class="nav nav-tabs">
+	<li><a href="{php echo $this->createWebUrl('setting')}">基础设置</a></li>
+	<li><a href="{php echo $this->createWebUrl('guanzhu')}">关注设置</a></li>
+	<li><a href="{php echo $this->createWebUrl('shenhe')}">审核设置</a></li>
+	<li><a href="{php echo $this->createWebUrl('ad')}">流量主设置</a></li>
+	<li><a href="{php echo $this->createWebUrl('poster')}">海报设置</a></li>
+	<li><a href="{php echo $this->createWebUrl('message')}">模板消息</a></li>
+	<li><a href="{php echo $this->createWebUrl('signin')}">签到设置</a></li>
+	<li><a href="{php echo $this->createWebUrl('settime')}">定时任务</a></li>
+	<li><a href="{php echo $this->createWebUrl('notice')}">公告设置</a></li>
+	<li class="active"><a href="{php echo $this->createWebUrl('centerdiy')}">个人中心</a></li>
+	<li><a href="{php echo $this->createWebUrl('others')}">其他设置</a></li>
+</ul>
+<div class="clearfixcon">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" id="form1" style="display: block">
+		<div class="panel panel-default con" id="tab3">
+			<div class="panel-heading">
+				设置
+			</div>
+			<div class="panel-body">
+				<div class="tab-pane active" id="tab_param2">
+				        <div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">个人中心头部图片</label>
+							<div class="col-sm-8">
+								{php echo tpl_form_field_image('centerhead',$info['centerhead']);}
+								<div style="color: red !important;">建议尺寸：800*400。
+							    </div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">我的订单图标</label>
+							<div class="col-sm-8">
+								{php echo tpl_form_field_image('order_icon',$info['order_icon']);}
+								<div style="color: red !important;">建议尺寸：150*150。
+							    </div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">邀请人数图标</label>
+							<div class="col-sm-8">
+								{php echo tpl_form_field_image('invite_icon',$info['invite_icon']);}
+								<div style="color: red !important;">建议尺寸：150*150。
+							    </div>
+							</div>
+						</div> 
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">规则说明图标</label>
+							<div class="col-sm-8">
+								{php echo tpl_form_field_image('rule_icon',$info['rule_icon']);}
+								<div style="color: red !important;">建议尺寸：150*150。
+							    </div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">常见问题图标</label>
+							<div class="col-sm-8">
+								{php echo tpl_form_field_image('qs_icon',$info['qs_icon']);}
+								<div style="color: red !important;">建议尺寸：150*150。
+							    </div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">消息通知图标</label>
+							<div class="col-sm-8">
+								{php echo tpl_form_field_image('news_icon',$info['news_icon']);}
+								<div style="color: red !important;">建议尺寸：150*150。
+							    </div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">联系我们图标</label>
+							<div class="col-sm-8">
+								{php echo tpl_form_field_image('contact_icon',$info['contact_icon']);}
+								<div style="color: red !important;">建议尺寸：150*150。
+							    </div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">卡券图标</label>
+							<div class="col-sm-8">
+								{php echo tpl_form_field_image('ka_icon',$info['ka_icon']);}
+								<div style="color: red !important;">建议尺寸：150*150。
+							    </div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">设置图标</label>
+							<div class="col-sm-8">
+								{php echo tpl_form_field_image('set_icon',$info['set_icon']);}
+								<div style="color: red !important;">建议尺寸：150*150。
+							    </div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">红包图标</label>
+							<div class="col-sm-8">
+								{php echo tpl_form_field_image('hb_icon',$info['hb_icon']);}
+								<div style="color: red !important;">建议尺寸：150*150。
+							    </div>
+							</div>
+						</div>
+						<div class="form-group">
+			                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">兑换记录按钮颜色</label>
+			                <div class="col-sm-8">
+			                    {php echo tpl_form_field_color('dhcolor', $value = $info['dhcolor'])}
+			                    <span class="help-block"></span>
+			                </div>
+                        </div>
+                        <div class="form-group">
+			                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">“兑换记录”字体颜色</label>
+			                <div class="col-sm-8">
+			                    {php echo tpl_form_field_color('dhjl_color', $value = $info['dhjl_color'])}
+			                    <span class="help-block"></span>
+			                </div>
+                        </div>
+                        <div class="form-group">
+			                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">红包提现按钮颜色</label>
+			                <div class="col-sm-8">
+			                    {php echo tpl_form_field_color('txcolor', $value = $info['txcolor'])}
+			                    <span class="help-block"></span>
+			                </div>
+                        </div>
+                        <div class="form-group">
+			                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">“提现记录”字体颜色</label>
+			                <div class="col-sm-8">
+			                    {php echo tpl_form_field_color('txjl_color', $value = $info['txjl_color'])}
+			                    <span class="help-block"></span>
+			                </div>
+                        </div>
+                        <div class="form-group">
+			                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">昵称颜色</label>
+			                <div class="col-sm-8">
+			                    {php echo tpl_form_field_color('name_color', $value = $info['name_color'])}
+			                    <span class="help-block"></span>
+			                </div>
+                        </div>
+                        <div class="form-group">
+			                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">用户ID颜色</label>
+			                <div class="col-sm-8">
+			                    {php echo tpl_form_field_color('id_color', $value = $info['id_color'])}
+			                    <span class="help-block"></span>
+			                </div>
+                        </div>                    
+                        <div class="form-group">
+			                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">用户ID背景颜色</label>
+			                <div class="col-sm-8">
+			                    {php echo tpl_form_field_color('idbg_color', $value = $info['idbg_color'])}
+			                    <span class="help-block"></span>
+			                </div>
+                        </div>                  
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group col-sm-12">
+			<input name="submit" type="submit" value="提交" class="btn btn-primary col-lg-1" {if $update_status == 1}disabled{/if}>
+			<input type="hidden" name="act" value="add" />
+		</div>
+	</form>
+</div>
+
+
+{template 'common/footer'}

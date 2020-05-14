@@ -1,0 +1,143 @@
+{template 'common/header'}
+
+<ul class="nav nav-tabs">
+	<li><a href="{php echo $this->createWebUrl('awards')}">奖品列表</a></li>
+	<li class="active"><a href="{php echo $this->createWebUrl('addawards')}">添加奖品</a></li>
+	<!-- <li><a href="{php echo $this->createWebUrl('awards_set')}">抽奖设置</a></li> -->
+</ul>
+<div class="clearfix">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" onsubmit="return formcheck()" style="">
+		<input type="hidden" name="id" value="{$info['id']}">
+		<div class="panel panel-default" style="">
+			<div class="panel-heading">
+				编辑奖品
+			</div>
+			<div class="panel-body" style="">
+	            <div class="form-group">
+			        <label class="col-xs-12 col-sm-3 col-md-2 control-label">奖品类型</label>
+			        <div class="col-sm-9 col-xs-12" id="qie">
+				    <label class="radio-inline">
+					   <input type="radio" name="awards_type" {if $info['awards_type'] == 1} checked {/if} value="1">真实商品
+				    </label>
+				    <label class="radio-inline">
+					   <input type="radio" name="awards_type" {if $info['awards_type'] == 2} checked {/if} value="2">步数币
+				    </label>
+				    <label class="radio-inline">
+					   <input type="radio" name="awards_type" {if $info['awards_type'] == 3} checked {/if} value="3">红包
+				    </label>
+			        </div>
+		        </div>
+		        <div class="form-group one">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style="color:red">*</span>奖品名</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="goods_name" id="advname" class="form-control" value="{$info['goods_name']}">
+					</div>
+				</div>                
+                <div class="form-group one">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label"><span style="color:red">*</span>奖品图</label>
+					<div class="col-sm-8">
+						{php echo tpl_form_field_image('main_img',$info['main_img']);}
+						<div style="color: red !important;">建议比例：600*600 。
+					    </div>
+					</div>
+				</div>
+				<div class="form-group one">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style="color:red">*</span>价格</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="price" id="advname" class="form-control" value="{$info['price']}">
+					</div>
+				</div>
+
+				<div class="form-group two">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">步数币</label>
+					<div class="col-sm-8">
+						<input type="text" name="awards_coin" class="form-control" value="{$info['awards_coin']}">	
+						<div style="color: red !important;">例：10
+					    </div>						
+					</div>
+				</div>
+
+				<div class="form-group three">
+					<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">红包</label>
+					<div class="col-sm-8">
+						<input type="text" name="awards_money" class="form-control" value="{$info['awards_money']}">
+						<div style="color: red !important;">例：1.99
+					    </div>							
+					</div>
+				</div>
+				
+                             
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否可以抽中</label>
+					<div class="col-sm-9 col-xs-12">
+						<label class="radio-inline">
+							<input type="radio" name="status"{if $info['status'] == 1} checked {/if} value="1"> 是
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="status" value="0"  {if $info['status'] != 1} checked {/if}> 否
+						</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style="color:red">*</span>中奖率</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="rate" id="advname" class="form-control" value="{$info['rate']}">
+						<div class='help-block'>100为必中，0为必不中。上方是否可以抽中选择是，此处中奖率才有效。如果设置多个“可以抽中”的奖品，请保证各个商品的中奖率相加不要超过100。</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style="color:red">*</span>排序</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="sort" id="advname" class="form-control" value="{$info['sort']}">
+						<div class='help-block'>大转盘抽奖排序为必填，按照1~7的顺序填写。必须添加七个奖品</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group col-sm-12">
+			{if empty($info['id'])}
+				<input type="hidden" name="act" value="add">
+			{else}
+				<input type="hidden" name="act" value="edit">
+			{/if}
+			<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1">
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+	$('#qie').find('label').each(function(){			
+		$(this).click(function(){
+			var index=$(this).index()
+			if(index==0){
+				$('.one').show()
+				$('.two').hide()
+				$('.three').hide()
+			}else if(index==1){
+				$('.one').hide()
+				$('.two').show()
+				$('.three').hide()
+			}
+			else if(index==2){
+				$('.one').hide()
+				$('.two').hide()
+				$('.three').show()
+			}
+		})
+	})
+	var index = $('#qie label').find(':radio:checked').val();
+	        if(index==1){
+				$('.one').show()
+				$('.two').hide()
+				$('.three').hide()
+			}else if(index==2){
+				$('.one').hide()
+				$('.two').show()
+				$('.three').hide()
+			}
+			else if(index==3){
+				$('.one').hide()
+				$('.two').hide()
+				$('.three').show()
+			}
+</script>
+{template 'common/footer'}

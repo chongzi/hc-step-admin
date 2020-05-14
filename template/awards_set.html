@@ -1,0 +1,83 @@
+{template 'common/header'}
+<script src="/addons/hc_pdd/template/js/color.js"></script>
+<ul class="nav nav-tabs">
+	<li><a href="{php echo $this->createWebUrl('awards')}">奖品列表</a></li>
+	<li><a href="{php echo $this->createWebUrl('addawards')}">添加奖品</a></li>
+	<li class="active"><a href="{php echo $this->createWebUrl('awards_set')}">抽奖设置</a></li>
+</ul>
+<div class="clearfixcon">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" id="form1" style="display: block">
+		<div class="panel panel-default con" id="tab3">
+			<div class="panel-heading">
+				抽奖设置
+			</div>
+			<div class="panel-body">
+				<div class="tab-pane active" id="tab_param2">
+						<div class="form-group">
+					        <label class="col-xs-12 col-sm-3 col-md-2 control-label">抽奖模式</label>
+					        <div class="col-sm-9 col-xs-12">
+						    <label class="radio-inline">
+							   <input type="radio" name="lotto_type" {if $ccc['lotto_type'] == 1} checked {/if} value="1">原始抽奖
+						    </label>
+						    <label class="radio-inline">
+							   <input type="radio" name="lotto_type" {if $ccc['lotto_type'] == 2} checked {/if} value="2">大转盘抽奖
+							   <div style="color: red !important;">&#22320;&#29916;&#31038;&#21306;&#25552;&#20379;&#119;&#119;&#119;&#46;&#100;&#103;&#53;&#57;&#56;&#46;&#99;&#111;&#109;</div>
+						    </label>
+						    <div class='help-block'>大转盘模式请保证奖品列表添加8个奖品，不多不少。</div>
+					        </div>
+				        </div> 
+
+				        <!-- <div class="form-group">
+				        					        <label class="col-xs-12 col-sm-3 col-md-2 control-label">左上奖品类型</label>
+				        					        <div class="col-sm-9 col-xs-12">
+				        						    <label class="radio-inline">
+				        							   <input type="radio" name="status" {if $ccc['lotto_type'] == 1} checked {/if} value="1">真实商品
+				        						    </label>
+				        						    <label class="radio-inline">
+				        							   <input type="radio" name="status" {if $ccc['lotto_type'] == 2} checked {/if} value="2">步数币
+				        						    </label>
+				        						    <label class="radio-inline">
+				        							   <input type="radio" name="status" {if $ccc['lotto_type'] == 3} checked {/if} value="3">红包
+				        						    </label>
+				        					        </div>
+				        </div>
+				        <div class="form-group">
+				        							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">奖品名</label>
+				        							<div class="col-sm-8">
+				        								<input type="text" name="rolltime" class="form-control" value="{$ccc['rolltime']}">							
+				        							</div>
+				        						</div>
+				        <div class="form-group">
+				        							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">奖品图</label>
+				        							<div class="col-sm-8">
+				        								{php echo tpl_form_field_image('longbg',$info['longbg']);}
+				        								<div style="color: red !important;">建议尺寸：200*200。
+				        							    </div>
+				        							</div>
+				        						</div>
+				        						<div class="form-group">
+				        							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">步数币</label>
+				        							<div class="col-sm-8">
+				        								<input type="text" name="rolltime" class="form-control" value="{$ccc['rolltime']}">							
+				        							</div>
+				        						</div>
+				        						<div class="form-group">
+				        							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">红包</label>
+				        							<div class="col-sm-8">
+				        								<input type="text" name="rolltime" class="form-control" value="{$ccc['rolltime']}">							
+				        							</div>
+				        						</div> -->
+
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group col-sm-12">
+			<input name="submit" type="submit" value="提交" class="btn btn-primary col-lg-1" {if $update_status == 1}disabled{/if}>
+			<input type="hidden" name="act" value="add" />
+		</div>
+	</form>
+</div>
+
+
+{template 'common/footer'}

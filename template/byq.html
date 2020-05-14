@@ -1,0 +1,77 @@
+{template 'common/header'}
+
+<div class="clearfix">
+<ul class="nav nav-tabs">
+	<li class="active"><a href="{php echo $this->createWebUrl('byq')}">动态审核</a></li>
+	<li><a href="{php echo $this->createWebUrl('topic')}">话题列表</a></li>
+	<li><a href="{php echo $this->createWebUrl('topic_post')}">添加话题</a></li>
+	<li><a href="{php echo $this->createWebUrl('byq_set')}">设置</a></li>
+</ul>
+<div class="panel panel-default">
+	<div class="panel-heading">审核</div>
+	<div class="panel-body">
+		<sapn style="color:red;">步友圈功能入口，请在基本设置-》其他设置中按需添加。注意：请运营者多多注意步友圈的动态，如有发现色情，政治敏感，暴力血腥内容，请及时删除。</sapn>
+	</div>
+</div>
+<div class="main panel panel-default">
+	<div class="table-responsive">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:5%;" class="text-center">id</th>
+					<th style="width:35%;" class="text-center">图片</th>
+					<th style="width:10%;" class="text-center">内容</th>
+					<th style="width:10%;" class="text-center">话题</th>
+					<th style="width:10%;" class="text-center">发布人</th>				
+					<th style="width:10%;" class="text-center">发布时间</th>
+					<th style="width:5%;" class="text-center">状态</th>
+					<th class="text-right" style="width:15%;" class="text-center">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $index $item}
+				<tr>
+					<td class="text-center">{$item['id']}</td>					
+					<td class="text-center">{loop $item['content_img'] $index $info}{if $info}<img class="scrollLoading" src="{media $info}" data-url="{media $info}"  height="50" width="50">{else}无图片{/if}{/loop}</td>
+					<td class="text-center">{$item['content']}</td>
+					<td class="text-center">{$item['topic']}</td>
+					<td class="text-center"><img class="scrollLoading" src="{media $item['head_pic']}" data-url="{media $item['head_pic']}"  height="50" width="50" title="{$item['nick_name']}"></td>
+					<td class="text-center">{$item['time']}</td>
+					<td class="text-center">{if $item['status'] == 1}
+							<span class="label label-success">通过</span>
+							{else}
+							<span class="label label-default">未通过</span>
+						{/if}
+					</td>
+					<td class="text-right">
+					{if $item['status'] == 0}
+						<a href="{php echo $this->createWebUrl('byqdo',array('id'=>$item['id'],'act'=>'shenhe'))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="审核">审核</a>
+					{/if}
+						<a href="{php echo $this->createWebUrl('byqdo',array('act'=>'del','id'=>$item['id']))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="删除"><i class="fa fa-times"></i></a>
+					</td>
+				</tr>
+				{/loop}
+				{if empty($list) }
+                <tr ng-if="!wechats">
+                <td colspan="9" class="text-center">暂无数据</td>
+                </tr>
+                {/if}
+                <tr>
+					<td colspan="9" style="text-align:right">{$page}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<script>
+	require(['bootstrap'],function($){
+		$('.btn').hover(function(){
+			$(this).tooltip('show');
+		},function(){
+			$(this).tooltip('hide');
+		});
+	});
+</script>
+</div>
+
+{template 'common/footer'}

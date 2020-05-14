@@ -1,0 +1,158 @@
+{template 'common/header'}
+<style>
+	.dag,.dagtwo,.dagthree,.dagfor{
+		display:none;
+	}
+</style>
+<ul class="nav nav-tabs">
+	<li><a href="{php echo $this->createWebUrl('mission')}">任务列表</a></li>
+	<li class="active"><a href="{php echo $this->createWebUrl('mission_post')}">添加任务</a></li>
+	<li><a href="{php echo $this->createWebUrl('missionlog')}">任务记录</a></li>
+</ul>
+<div class="clearfix">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" onsubmit="return formcheck()">
+		<input type="hidden" name="id" value="{$info['id']}">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				设置
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">排序</label>
+					<div class="col-sm-4 col-xs-12">
+						<input type="text" name="displayorder" class="form-control" value="{$info['displayorder']}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style="color:red">*</span>任务标题</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" id="advname" name="title" class="form-control" value="{$info['title']}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">任务说明</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" id="advname" name="title2" class="form-control" value="{$info['title2']}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">任务类型</label>
+					<div class="col-sm-9 col-xs-12" id="qie">
+						<label class="radio-inline inlinetab" >
+							<input type="radio" name="mission_type" {if $info['mission_type'] == 0} checked {/if} value="0">邀请好友
+						</label>
+						<label class="radio-inline inlinetab" >
+							<input type="radio" name="mission_type" {if $info['mission_type'] == 1} checked {/if} value="1">跳转其他小程序
+						</label>
+						<label class="radio-inline inlinetab" >
+							<input type="radio" name="mission_type" {if $info['mission_type'] == 2} checked {/if} value="2">首次步友圈发帖
+						</label>
+						<label class="radio-inline inlinetab" >
+							<input type="radio" name="mission_type" {if $info['mission_type'] == 3} checked {/if} value="3">绑定手机号
+						</label>
+						<label class="radio-inline inlinetab" >
+							<input type="radio" name="mission_type" {if $info['mission_type'] == 4} checked {/if} value="4">看激励视频
+						</label>
+						<span class="help-block" style="color:red;">任务类型为“邀请好友”时，下方“任务奖励”的步数与基础设置中“邀请一位新用户获得”步数需保持一致。</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">任务小图标</label>
+					<div class="col-sm-9 col-xs-12">
+						{php echo tpl_form_field_image('mission_icon',$info[mission_icon]);}
+						<span class="help-block">图标图片，建议100*100</span>
+					</div>
+				</div>
+				<!-- <div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">任务奖励</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" id="advname" name="step" class="form-control" value="{$info['step']}">
+						<div class='input-group-addon'>步</div>
+					</div>
+				</div> -->
+				<div class="form-group">
+					<label class="col-xs-6 col-sm-3 col-md-2 col-lg-2 control-label">任务奖励</label>
+					<div class="col-sm-8">
+						<div class="input-group">
+						<input type="text" name="step" class="form-control" value="{$info['step']}">
+						<div class='input-group-addon'>步</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group one">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">小程序appid</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" id="advname" name="appid" class="form-control" value="{$info['appid']}">
+					</div>
+				</div>
+				<div class="form-group one">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">小程序路径path</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" id="advname" name="path" class="form-control" value="{$info['path']}">
+					</div>
+				</div>
+				<div class="form-group wan">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">激励式视频广告位ID</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" id="advname" name="ad" class="form-control" value="{$info['ad']}">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group col-sm-12">
+			<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1">
+			{if empty($info['id'])}
+				<input type="hidden" name="act" value="add">
+			{else}
+				<input type="hidden" name="act" value="edit">
+			{/if}
+		</div>
+	</form>
+
+</div>
+<script type="text/javascript">
+	$('#qie').find('label').each(function(){			
+		$(this).click(function(){
+			var index=$(this).index()
+			if(index==0){
+				$('.one').hide(),
+				$('.wan').hide()
+			}else if(index==1){
+				$('.one').show(),
+				$('.wan').hide()
+			}
+			else if(index==2){
+				$('.one').hide(),
+				$('.wan').hide()
+			}
+			else if(index==3){
+				$('.one').hide(),
+				$('.wan').hide()
+			}else if(index==4){
+				$('.one').hide(),
+				$('.wan').show()
+			}
+		})
+	})
+	var index = $('#qie label').find(':radio:checked').val();
+	        if(index==0){
+				$('.one').hide(),
+				$('.wan').hide()
+			}else if(index==1){
+				$('.one').show(),
+				$('.wan').hide()
+			}
+			else if(index==2){
+				$('.one').hide(),
+				$('.wan').hide()
+			}
+			else if(index==3){
+				$('.one').hide(),
+				$('.wan').hide()
+			}else if(index==4){
+				$('.one').hide(),
+				$('.wan').show()
+			}
+</script>
+
+{template 'common/footer'}

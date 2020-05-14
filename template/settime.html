@@ -1,0 +1,67 @@
+{template 'common/header'}
+<script src="/addons/hc_pdd/template/js/color.js"></script>
+<ul class="nav nav-tabs">
+	<li><a href="{php echo $this->createWebUrl('setting')}">基础设置</a></li>
+	<li><a href="{php echo $this->createWebUrl('guanzhu')}">关注设置</a></li>
+	<li><a href="{php echo $this->createWebUrl('shenhe')}">审核设置</a></li>
+	<li><a href="{php echo $this->createWebUrl('ad')}">流量主设置</a></li>
+	<li><a href="{php echo $this->createWebUrl('poster')}">海报设置</a></li>
+    <li><a href="{php echo $this->createWebUrl('message')}">模板消息</a></li>
+    <li><a href="{php echo $this->createWebUrl('signin')}">签到设置</a></li>
+    <li class="active"><a href="{php echo $this->createWebUrl('settime')}">定时任务</a></li>
+    <li><a href="{php echo $this->createWebUrl('notice')}">公告设置</a></li>
+    <li><a href="{php echo $this->createWebUrl('centerdiy')}">个人中心</a></li>
+    <li><a href="{php echo $this->createWebUrl('others')}">其他设置</a></li>
+</ul>
+<div class="clearfixcon">
+<div class="panel panel-default con" id="tab3">
+	<div class="panel-heading">设置</div>
+            <div class="panel-body">
+                <div class="tab-content">
+                    <div class="tab-pane active">
+                        <div class=". form-group">
+                            <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">步数挑战</label>
+                            <div class="col-xs-12 col-sm-8 col-lg-7">
+                                <span class="help-block">开启后：步数挑战赛奖励自动发放。<span class="label label-success">{$url1}</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="tab-content">
+                    <div class="tab-pane active">
+                        <div class=". form-group">
+                            <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">预约提醒</label>
+                            <div class="col-xs-12 col-sm-8 col-lg-7">
+                                <span class="help-block">开启后：预约提醒模板消息自动发放。<span class="label label-success">{$url2}</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</div>
+</div>
+<script>
+
+
+    function closeWindow(url)
+    {
+        var iWidth=300;//弹出窗口的宽度;
+        var iHeight=150;//弹出窗口的高度;
+        var iTop = (window.screen.availHeight - 30 - iHeight) / 2; //获得窗口的垂直位置
+        var iLeft = (window.screen.availWidth - 10 - iWidth) / 2; //获得窗口的水平位置
+        myWindow = window.open(url,"myWindow",'height=' + iHeight + ',,innerHeight=' + iHeight + ',width=' + iWidth + ',innerWidth=' + iWidth + ',top=' + iTop + ',left=' + iLeft + ',status=no,toolbar=no,menubar=no,location=no,resizable=no,scrollbars=0,titlebar=no');
+        //myWindow.document.write("运行中，请稍后...");
+        //window.opener=null;
+        window.setTimeout(function(){
+            myWindow.close();
+            location.href="{php echo $this->createWebUrl('settime')}"
+        }, 500);
+
+    }
+</script>
+
+{template 'common/footer'}

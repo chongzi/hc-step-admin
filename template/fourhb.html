@@ -1,0 +1,167 @@
+{template 'common/header'}
+<script src="/addons/hc_pdd/template/js/color.js"></script>
+<ul class="nav nav-tabs">
+	<li class="active"><a href="{php echo $this->createWebUrl('fourhb')}">红包设置</a></li>
+	<li><a href="{php echo $this->createWebUrl('fourhblog')}">红包领取记录</a></li>
+	<li><a href="{php echo $this->createWebUrl('fourhbwith')}">提现记录</a></li>
+	<li><a href="{php echo $this->createWebUrl('payset')}">支付证书</a></li>
+</ul>
+<div class="clearfixcon">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" id="form1" style="display: block">
+		<div class="panel panel-default con" id="tab3">
+			<div class="panel-body">
+				<div class="tab-pane active" id="tab_param2">
+				        <div class="form-group">
+					        <label class="col-xs-12 col-sm-3 col-md-2 control-label">是否开启红包功能</label>
+					        <div class="col-sm-9 col-xs-12">
+						    <label class="radio-inline">
+							   <input type="radio" name="is_fourhb" {if $info['is_fourhb'] == 1} checked {/if} value="1">开启
+						    </label>
+						    <label class="radio-inline">
+							   <input type="radio" name="is_fourhb" value="0" {if $info['is_fourhb'] != 1} checked {/if}>关闭
+						    </label>
+						    <div style="color: red !important;">功能简介：用户每天可以开启一个大红包，之后可以选择再开最多四个小红包。用户通过分享给好友邀请新用户的方式开启红包。每邀请一个新用户，可以再开启一个小红包
+							</div>
+					        </div>
+				        </div>
+				        <div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">开红包消耗步数币</label>
+							<div class="col-sm-8">
+								<input type="text" name="fourhb_coin" class="form-control" value="{$info['fourhb_coin']}">
+								<div style="color: red !important;">例：5
+							    </div>
+							</div>
+						</div>
+				        <div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">红包分享标题</label>
+							<div class="col-sm-8">
+								<input type="text" name="fourhb_sharetitle" class="form-control" value="{$info['fourhb_sharetitle']}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">红包分享图</label>
+							<div class="col-sm-8">
+								{php echo tpl_form_field_image('fourhb_sharepic',$info['fourhb_sharepic']);}
+								<div style="color: red !important;">建议尺寸：600*600
+							    </div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">红包封面图</label>
+							<div class="col-sm-8">
+								{php echo tpl_form_field_image('fourhb_mainpic',$info['fourhb_mainpic']);}
+								<div style="color: red !important;">建议尺寸：1012*272。可自定义，不传图片前端显示默认图
+							    </div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">开红包背景图</label>
+							<div class="col-sm-8">
+								{php echo tpl_form_field_image('openhbpic',$info['openhbpic']);}
+								<div style="color: red !important;">建议尺寸：936*1154。可自定义，不传图片前端显示默认图
+							    </div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">四个小红包-待解锁背景图</label>
+							<div class="col-sm-8">
+								{php echo tpl_form_field_image('daijiesuo',$info['daijiesuo']);}
+								<div style="color: red !important;">建议尺寸：156*179。可自定义，不传图片前端显示默认图
+							    </div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">四个小红包-待开启背景图</label>
+							<div class="col-sm-8">
+								{php echo tpl_form_field_image('daikaiqi',$info['daikaiqi']);}
+								<div style="color: red !important;">建议尺寸：156*179。可自定义，不传图片前端显示默认图
+							    </div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">四个小红包-已开启背景图</label>
+							<div class="col-sm-8">
+								{php echo tpl_form_field_image('yikaiqi',$info['yikaiqi']);}
+								<div style="color: red !important;">建议尺寸：156*179。可自定义，不传图片前端显示默认图
+							    </div>
+							</div>
+						</div>
+				        <div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">大红包下限</label>
+							<div class="col-sm-8">
+								<input type="text" name="min_bighbmoney" class="form-control" value="{$info['min_bighbmoney']}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">大红包上限</label>
+							<div class="col-sm-8">
+								<input type="text" name="max_bighbmoney" class="form-control" value="{$info['max_bighbmoney']}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">小红包下限</label>
+							<div class="col-sm-8">
+								<input type="text" name="min_smallhbmoney" class="form-control" value="{$info['min_smallhbmoney']}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">小红包上限</label>
+							<div class="col-sm-8">
+								<input type="text" name="max_smallhbmoney" class="form-control" value="{$info['max_smallhbmoney']}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">提现门槛</label>
+							<div class="col-sm-8">
+								<input type="text" name="min_hbtxmoney" class="form-control" value="{$info['min_hbtxmoney']}">
+							</div>
+						</div>	
+						<div class="form-group" style="">
+							<label class="col-xs-12 col-sm-3 col-md-2 control-label">提现说明</label>
+							<div class="col-sm-9 col-xs-12">
+								<textarea class="form-control" name="txinfo" id="advname" class="form-control" value="{$info['txinfo']}">{$info['txinfo']}</textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">开红包文案第一行</label>
+							<div class="col-sm-8">
+								<input type="text" name="hbtext1" class="form-control" value="{$info['hbtext1']}">
+								<div style="color: red !important;">如：每天邀请好友参与平分
+							    </div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">开红包文案第二行</label>
+							<div class="col-sm-8">
+								<input type="text" name="hbtext2" class="form-control" value="{$info['hbtext2']}">
+								<div style="color: red !important;">如：5万元红包
+							    </div>
+							</div>
+						</div>
+						<!-- <div class="form-group">
+										<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">红包树页面发红包说明</label>
+										<div class="col-sm-8">
+											<input type="text" name="treeinfo" class="form-control" value="{$info['treeinfo']}">
+											<div style="color: red !important;">例：给好友发红包，自己也能获得同等金额红包。
+										    </div>
+										</div>
+									</div> -->			
+						<!-- <div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">入口图标</label>
+							<div class="col-sm-8">
+								{php echo tpl_form_field_image('tree_pic',$info['tree_pic']);}
+								<div style="color: red !important;">建议尺寸：200*200
+							    </div>
+							</div>
+						</div> -->										                       											                       
+				</div>
+			</div>
+		</div>
+		<div class="form-group col-sm-12">
+			<input name="submit" type="submit" value="提交" class="btn btn-primary col-lg-1">
+			<input type="hidden" name="act" value="add" />
+		</div>
+	</form>
+</div>
+
+{template 'common/footer'}
